@@ -5,9 +5,9 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "include/video-rendering.hh"   // ✅ forward slash
+#include "include/video-rendering.hh"   
 
-// ---------- Cross-platform aligned allocation ----------
+
 void* aligned_malloc(size_t size, size_t alignment) {
 #ifdef _WIN32
     return _aligned_malloc(size, alignment);
@@ -26,7 +26,7 @@ void aligned_free(void* ptr) {
     free(ptr);
 #endif
 }
-// -------------------------------------------------------
+
 
 int main(int argc, const char** argv) {
     GLFWwindow* window;
@@ -36,14 +36,13 @@ int main(int argc, const char** argv) {
         return 1;
     }
 
-    // Compatibility profile REQUIRED for glBegin/glMatrixMode
+  
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
 
     VideoReaderState vr_state{};
 
-    // ✅ Windows path (use forward slashes)
     if (!video_reader_open(
         &vr_state,
         "kanemi3.mov"
@@ -67,13 +66,12 @@ int main(int argc, const char** argv) {
 
     glfwMakeContextCurrent(window);
 
-    // GLAD init
+
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         printf("Failed to initialize GLAD\n");
         return 1;
     }
 
-    // Generate texture
     GLuint tex_handle;
     glGenTextures(1, &tex_handle);
     glBindTexture(GL_TEXTURE_2D, tex_handle);
